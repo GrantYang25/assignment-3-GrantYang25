@@ -12,34 +12,39 @@ document.getElementById("modal-cancel").addEventListener("click", modal);
 document.getElementById("modal-close").addEventListener("click", modal);
 
 var posts = [];
-var current_post = document.getElementById("posts").firstElementChild;
+var currPost = document.getElementById("posts").firstElementChild;
 var size = document.getElementById("posts").childElementCount;
-posts.push(current_post);
+posts.push(currPost);
 
 for (var i = 1; i < size; i++) {
-    posts.push(current_post.nextElementSibling);
-    current_post = current_post.nextElementSibling;
+    posts.push(currPost.nextElementSibling);
+    currPost = currPost.nextElementSibling;
 }
 
-function modal(){
+function modal() {
+
     document.getElementById("post-photo-input").value = "";
-    document.getElementById("post-price-input").value = "";
     document.getElementById("post-text-input").value = "";
     document.getElementById("post-city-input").value = "";
-    document.getElementById("post-conditon-new").checked = true;
+    document.getElementById("post-price-input").value = "";
+    document.getElementById("post-condition-new").checked = true;
     document.getElementById("modal-backdrop").classList.toggle('hidden');
     document.getElementById("sell-something-modal").classList.toggle('hidden');
 }
-function checkValues(){
-    if ((document.getElementById("post-photo-input").value == "") || (document.getElementById("post-price-input").value == "") || (document.getElementById("post-text-input").value == "") || (document.getElementById("post-city-input").value == "")){
-        return false;
-    }
+
+function updateValues() {
+    if (document.getElementById("post-text-input").value == ""
+        || document.getElementById("post-price-input").value == ""
+        || document.getElementById("post-photo-input").value == ""
+        || document.getElementById("post-city-input").value == "") {
+            return false;
+        }
     return true;
 }
 
-function modalAccept(){
-    if(!checkValues()){
-        alert("entries are empty");
+function modalAccept() {
+    if (!updateValues()) {
+        alert("Please fill in all entries.");
         return;
     }
 
@@ -48,20 +53,21 @@ function modalAccept(){
 
     var condition = "";
     if (document.getElementById("post-condition-new").checked){
-        condition = "new";
+         condition = "new"; 
     }
-    else if(document.getElementById("post-condition-excellent").checked){
-        condition = "excellent";
+    else if (document.getElementById("post-condition-excellent").checked){ 
+         condition = "excellent"; 
     }
-    else if(document.getElementById("post-condition-good").checked){
-        condition = "good";
+    else if (document.getElementById("post-condition-good").checked){
+         condition = "good"; 
     }
-    else if(document.getElementById("post-condition-fair").checked){
-        condition = "fair";
+    else if (document.getElementById("post-condition-fair").checked) {
+         condition = "fair"; 
     }
-    else if(document.getElementById("post-condition-poor").checked){
-        condition = "poor";
+    else if (document.getElementById("post-condition-poor").checked) {
+         condition = "poor"; 
     }
+
     copy.setAttribute("data-price", document.getElementById("post-price-input").value);
     copy.setAttribute("data-city", document.getElementById("post-city-input").value);
     copy.setAttribute("data-condition", condition);
@@ -73,34 +79,34 @@ function modalAccept(){
 
     var list = document.getElementById("filter-city");
     var cities = list.childElementCount - 1;
-    var city_entered = document.getElementById("post-city-input").value
+    var inputedCity = document.getElementById("post-city-input").value
     var exists = false;
 
     for (var i = 1; i < cities; i++) {
-        var node_text = document.getElementById("filter-city").children[i].text.toLowerCase();;
-        var city_entered_lowc = city_entered.toLowerCase();
-        if (node_text == city_entered_lowc) {
+        var insertedText = document.getElementById("filter-city").children[i].text.toLowerCase();;
+        var enteredCity = inputedCity.toLowerCase();
+        if (insertedText == enteredCity) {
             exists = true;
             break;
         }
     }
 
     if (!exists) {
-        var elem = document.createElement("option");
-        var city = city_entered[0].toUpperCase();
-        for(var i = 1; i < city_entered.length; i++) {
-            city += city_entered[i].toLowerCase();
+        var element = document.createElement("option");
+        var city = inputedCity[0].toUpperCase();
+        for(var i = 1; i < inputedCity.length; i++) {
+            city += inputedCity[i].toLowerCase();
         }
-        elem.text = city;
-        list.appendChild(elem);
+        element.text = city;
+        list.appendChild(element);
     }
 
     posts.push(copy);
 
     document.getElementById("posts").appendChild(copy);
-    modal();
 }
-function updateButton(){
+
+function updateButton() {
     var text = document.getElementById("filter-text").value.toLowerCase();
     var maxPrice = document.getElementById("filter-max-price").value;
     var minPrice = document.getElementById("filter-min-price").value;
@@ -117,17 +123,16 @@ function updateButton(){
     }
 
     var listOfConditions = document.getElementById("filter-condition");
-    var contains = false;
     for (var i = 1; i < 6; i++) {
         if (listOfConditions.children[i].firstElementChild.checked) {
             conditions.push(listOfConditions.children[i].lastElementChild.textContent.toLowerCase());
         }
     }
 
-    var posts_elem = document.getElementById("posts");
-    var size = posts_elem.children.length;
+    var postsElement = document.getElementById("posts");
+    var size = postsElement.children.length;
     for (var i = 0; i < size; i++) {
-        posts_elem.removeChild(posts_elem.firstElementChild);
+        postsElement.removeChild(postsElement.firstElementChild);
     }
 
     for (var i = 0; i < posts.length; i++) {
@@ -157,9 +162,7 @@ function updateButton(){
         }
 
         if (bool) {
-            posts_elem.appendChild(element);
+            postsElement.appendChild(element);
         }
     }
-
 }
-
