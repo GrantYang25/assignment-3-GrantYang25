@@ -7,12 +7,23 @@
  */
 document.getElementById("filter-update-button").addEventListener("click", updateButton);
 document.getElementById("sell-something-button").addEventListener("click", modal);
-document.getElementById("modal-accept").addEventListener("click",modalAccept);
+document.getElementById("modal-accept").addEventListener("click", modalAccept);
 document.getElementById("modal-cancel").addEventListener("click", modal);
 document.getElementById("modal-close").addEventListener("click", modal);
 
+var posts = [];
+var current_post = document.getElementById("posts").firstElementChild;
+var size = document.getElementById("posts").childElementCount;
+posts.push(current_post);
+
+for (var i = 1; i < size; i++) {
+    posts.push(current_post.nextElementSibling);
+    current_post = current_post.nextElementSibling;
+    /*alert("posts[" + i + "] = " + posts[i]);*/
+}
+
 function modal(){
-    document.getElementById("post-photo-input"). value = "";
+    document.getElementById("post-photo-input").value = "";
     document.getElementById("post-price-input").value = "";
     document.getElementById("post-text-input").value = "";
     document.getElementById("post-city-input").value = "";
@@ -29,7 +40,7 @@ function checkValues(){
 
 function modalAccept(){
     if(!checkValues()){
-        console.log("entries are empty");
+        alert("entries are empty");
         return;
     }
 
@@ -60,6 +71,37 @@ function modalAccept(){
     copy.firstElementChild.lastElementChild.firstElementChild.textContent = document.getElementById("post-text-input").value;
     copy.firstElementChild.lastElementChild.firstElementChild.nextElementSibling.textContent = "$" + document.getElementById("post-price-input").value;
     copy.firstElementChild.lastElementChild.lastElementChild.textContent = "(" + document.getElementById("post-city-input").value + ")";
+
+    var list = document.getElementById("filter-city");
+    var cities = list.childElementCount - 1;
+    var city_entered = document.getElementById("post-city-input").value
+    var exists = false;
+
+    for (var i = 1; i < cities; i++) {
+        var node_text = document.getElementById("filter-city").children[i].text.toLowerCase();;
+        var city_entered_lowc = city_entered.toLowerCase();
+        if (node_text == city_entered_lowc) {
+            exists = true;
+            break;
+        }
+    }
+
+    if (!exists) {
+        var elem = document.createElement("option");
+        var city = city_entered[0].toUpperCase();
+        for(var i = 1; i < city_entered.length; i++) {
+            city += city_entered[i].toLowerCase();
+        }
+        elem.text = city;
+        list.appendChild(elem);
+    }
+
+    /*add to global*/
+    posts.push(copy);
+
+    /*add and togle modal*/
+    document.getElementById("posts").appendChild(copy);
+    modal();
 }
 function updateButton(){
     var text = document.getElementById("filter-text").value.toLowerCase();
@@ -68,13 +110,6 @@ function updateButton(){
     var city = "";
     var conditions = [];
 
-    var listOfConditions = document.getElementById("filter-condition");
-    var contains = false;
-    for (var i = 1; i < 6; i++) {
-        if (listOfConditions.children[i].firstElementChild.checked) {
-            conditions.push(listOfConditions.children[i].lastElementChild.textContent.toLowerCase());
-        }
-    }
     var listOfCities = document.getElementById("filter-city");
     var sizeOfList = listOfCities.childElementCount;
     for (var i = 0; i < sizeOfList; i++) {
@@ -84,5 +119,12 @@ function updateButton(){
         }
     }
 
+    var listOfConditions = document.getElementById("filter-condition");
+    var contains = false;
+    for (var i = 1; i < 6; i++) {
+        if (listOfConditions.children[i].firstElementChild.checked) {
+            conditions.push(listOfConditions.children[i].lastElementChild.textContent.toLowerCase());
+        }
+    }
 }
 
