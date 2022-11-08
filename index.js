@@ -19,7 +19,6 @@ posts.push(current_post);
 for (var i = 1; i < size; i++) {
     posts.push(current_post.nextElementSibling);
     current_post = current_post.nextElementSibling;
-    /*alert("posts[" + i + "] = " + posts[i]);*/
 }
 
 function modal(){
@@ -96,10 +95,8 @@ function modalAccept(){
         list.appendChild(elem);
     }
 
-    /*add to global*/
     posts.push(copy);
 
-    /*add and togle modal*/
     document.getElementById("posts").appendChild(copy);
     modal();
 }
@@ -126,5 +123,43 @@ function updateButton(){
             conditions.push(listOfConditions.children[i].lastElementChild.textContent.toLowerCase());
         }
     }
+
+    var posts_elem = document.getElementById("posts");
+    var size = posts_elem.children.length;
+    for (var i = 0; i < size; i++) {
+        posts_elem.removeChild(posts_elem.firstElementChild);
+    }
+
+    for (var i = 0; i < posts.length; i++) {
+        var element = posts[i];
+        var bool = false;
+        var conditionBool = false;
+        var elementTitle = element.firstElementChild.lastElementChild.firstElementChild.text.toLowerCase();
+        var elementPrice = element.getAttribute("data-price");
+        var elementCity = element.getAttribute("data-city").toLowerCase();
+        var elementCondition = element.getAttribute("data-condition");
+
+        if (elementTitle.search(text) != -1) {
+            if (elementCity == city || city == "" || city == "any") {
+                for (var j = 0; j < conditions.length; j++) {
+                    if (elementCondition == conditions[j]) {
+                        conditionBool = true;
+                        break;
+                    }
+                }
+                if (conditionBool || conditions.length == 0) {
+                    if (minPrice == "" && maxPrice == "") { bool = true; }
+                    else if (minPrice != "" && maxPrice == "" && elementPrice >= minPrice) { bool = true; }
+                    else if (minPrice == "" && maxPrice != "" && elementPrice <= maxPrice) { bool = true; }
+                    else if (elementPrice >= minPrice && elementPrice <= maxPrice) { bool = true; }
+                }
+            }
+        }
+
+        if (bool) {
+            posts_elem.appendChild(element);
+        }
+    }
+
 }
 
