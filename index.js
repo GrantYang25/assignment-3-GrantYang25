@@ -20,4 +20,10 @@ function modal(){
     document.getElementById("modal-backdrop").classList.toggle('hidden');
     document.getElementById("sell-something-modal").classList.toggle('hidden');
 }
+function checkValues(){
+    if ((document.getElementById("post-photo-input").value == "") || (document.getElementById("post-price-input").value == "") || (document.getElementById("post-text-input").value == "") || (document.getElementById("post-city-input").value == "")){
+        return false;
+    }
+    return true;
+}
 
