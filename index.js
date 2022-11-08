@@ -6,10 +6,10 @@
  * Email: Yanggra@oregonstate.edu
  */
 document.getElementById("filter-update-button").addEventListener("click");
-document.getElementById("sell-something-button").addEventListener("click");
+document.getElementById("sell-something-button").addEventListener("click", modal);
 document.getElementById("modal-accept").addEventListener("click");
-document.getElementById("modal-cancel").addEventListener("click");
-document.getElementById("modal-close").addEventListener("click");
+document.getElementById("modal-cancel").addEventListener("click", modal);
+document.getElementById("modal-close").addEventListener("click", modal);
 
 function modal(){
     document.getElementById("post-photo-input"). value = "";
