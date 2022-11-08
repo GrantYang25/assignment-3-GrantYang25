@@ -5,7 +5,7 @@
  * Name: Grant Yang
  * Email: Yanggra@oregonstate.edu
  */
-document.getElementById("filter-update-button").addEventListener("click", update);
+document.getElementById("filter-update-button").addEventListener("click", updateButton);
 document.getElementById("sell-something-button").addEventListener("click", modal);
 document.getElementById("modal-accept").addEventListener("click",modalAccept);
 document.getElementById("modal-cancel").addEventListener("click", modal);
@@ -61,13 +61,28 @@ function modalAccept(){
     copy.firstElementChild.lastElementChild.firstElementChild.nextElementSibling.textContent = "$" + document.getElementById("post-price-input").value;
     copy.firstElementChild.lastElementChild.lastElementChild.textContent = "(" + document.getElementById("post-city-input").value + ")";
 }
-function update(){
+function updateButton(){
     var text = document.getElementById("filter-text").value.toLowerCase();
     var maxPrice = document.getElementById("filter-max-price").value;
     var minPrice = document.getElementById("filter-min-price").value;
     var city = "";
     var conditions = [];
 
+    var listOfConditions = document.getElementById("filter-condition");
+    var contains = false;
+    for (var i = 1; i < 6; i++) {
+        if (listOfConditions.children[i].firstElementChild.checked) {
+            conditions.push(listOfConditions.children[i].lastElementChild.textContent.toLowerCase());
+        }
+    }
+    var listOfCities = document.getElementById("filter-city");
+    var sizeOfList = listOfCities.childElementCount;
+    for (var i = 0; i < sizeOfList; i++) {
+        if (listOfCities.children[i].selected) {
+            city = listOfCities.children[i].text.toLowerCase();
+            break;
+        }
+    }
 
 }
 
