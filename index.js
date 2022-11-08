@@ -33,7 +33,8 @@ function modalAccept(){
         return;
     }
 
-    var post = document.getElementById("posts").lastElementChild;
+    var prevPost = document.getElementById("posts").lastElementChild;
+    var copy = prevPost.cloneNode(true);
 
     var condition = "";
     if (document.getElementById("post-condition-new").checked){
@@ -51,6 +52,13 @@ function modalAccept(){
     else if(document.getElementById("post-condition-poor").checked){
         condition = "poor";
     }
-    
+    copy.setAttribute("data-price", document.getElementById("post-price-input").value);
+    copy.setAttribute("data-city", document.getElementById("post-city-input").value);
+    copy.setAttribute("data-condition", condition);
+    copy.firstElementChild.firstElementChild.firstElementChild.setAttribute("src", document.getElementById("post-photo-input").value);
+    copy.firstElementChild.firstElementChild.firstElementChild.removeAttribute("alt");
+    copy.firstElementChild.lastElementChild.firstElementChild.textContent = document.getElementById("post-text-input").value;
+    copy.firstElementChild.lastElementChild.firstElementChild.nextElementSibling.textContent = "$" + document.getElementById("post-price-input").value;
+    copy.firstElementChild.lastElementChild.lastElementChild.textContent = "(" + document.getElementById("post-city-input").value + ")";
 }
 
