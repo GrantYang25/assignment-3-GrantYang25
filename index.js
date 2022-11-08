@@ -5,7 +5,7 @@
  * Name: Grant Yang
  * Email: Yanggra@oregonstate.edu
  */
-document.getElementById("filter-update-button").addEventListener("click");
+document.getElementById("filter-update-button").addEventListener("click", update);
 document.getElementById("sell-something-button").addEventListener("click", modal);
 document.getElementById("modal-accept").addEventListener("click",modalAccept);
 document.getElementById("modal-cancel").addEventListener("click", modal);
@@ -60,5 +60,14 @@ function modalAccept(){
     copy.firstElementChild.lastElementChild.firstElementChild.textContent = document.getElementById("post-text-input").value;
     copy.firstElementChild.lastElementChild.firstElementChild.nextElementSibling.textContent = "$" + document.getElementById("post-price-input").value;
     copy.firstElementChild.lastElementChild.lastElementChild.textContent = "(" + document.getElementById("post-city-input").value + ")";
+}
+function update(){
+    var text = document.getElementById("filter-text").value.toLowerCase();
+    var maxPrice = document.getElementById("filter-max-price").value;
+    var minPrice = document.getElementById("filter-min-price").value;
+    var city = "";
+    var conditions = [];
+
+
 }
 
