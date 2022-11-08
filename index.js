@@ -11,3 +11,13 @@ document.getElementById("modal-accept").addEventListener("click");
 document.getElementById("modal-cancel").addEventListener("click");
 document.getElementById("modal-close").addEventListener("click");
 
+function modal(){
+    document.getElementById("post-photo-input"). value = "";
+    document.getElementById("post-price-input").value = "";
+    document.getElementById("post-text-input").value = "";
+    document.getElementById("post-city-input").value = "";
+    document.getElementById("post-conditon-new").checked = true;
+    document.getElementById("modal-backdrop").classList.toggle('hidden');
+    document.getElementById("sell-something-modal").classList.toggle('hidden');
+}
+
